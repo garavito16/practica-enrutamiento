@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+
+import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
 import './App.css';
+import Color from './Components/Color';
+import Home from './Components/Home';
+import MostrarNumero from './Components/MostrarNumero';
+import MostrarTexto from './Components/MostrarTexto';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/home">
+          <Home></Home>
+        </Route>
+        <Route 
+            exact
+            path="/:texto" 
+            render={ (routeProps) => (isNaN(routeProps.match.params.texto)) ? <MostrarTexto {...routeProps} /> : <MostrarNumero {...routeProps} /> }
+        />
+        <Route exact path="/:texto/:color1/:color2" render={(routeProps) => <Color {...routeProps} />} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
